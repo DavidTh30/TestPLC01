@@ -1,0 +1,401 @@
+object Form1: TForm1
+  Left = -1459
+  Height = 461
+  Top = -464
+  Width = 829
+  BorderStyle = bsSingle
+  Caption = 'PLC:192.168.200.2  Port:102'
+  ClientHeight = 461
+  ClientWidth = 829
+  OnCreate = FormCreate
+  Position = poWorkAreaCenter
+  LCLVersion = '2.2.2.0'
+  object Button1: TButton
+    Left = 72
+    Height = 29
+    Top = 8
+    Width = 109
+    Caption = 'Connect'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 71
+    Height = 29
+    Top = 40
+    Width = 109
+    Caption = 'Disconnect'
+    OnClick = Button2Click
+    TabOrder = 1
+  end
+  object HMILabel1: THMILabel
+    Left = 208
+    Height = 17
+    Top = 8
+    Width = 56
+    AutoSize = True
+    Enabled = True
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -13
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+    NumberFormat = '#0'
+    PLCTag = MB_100
+    Prefix = 'MB100='
+    FormatDateTimeOptions = []
+  end
+  object HMICheckBox1: THMICheckBox
+    Left = 208
+    Height = 19
+    Top = 64
+    Width = 20
+    Enabled = True
+    ParentColor = False
+    TabOrder = 2
+    PLCTag = MB0_bit0
+    CaptionFalse = ''
+    CaptionTrue = ''
+    CaptionGrayed = ''
+    ValueTrue = 1
+  end
+  object HMICheckBox2: THMICheckBox
+    Left = 232
+    Height = 19
+    Top = 64
+    Width = 20
+    Enabled = True
+    ParentColor = False
+    TabOrder = 3
+    PLCTag = MB0_bit1
+    CaptionFalse = ''
+    CaptionTrue = ''
+    CaptionGrayed = ''
+    ValueTrue = 1
+  end
+  object HMICheckBox3: THMICheckBox
+    Left = 256
+    Height = 19
+    Top = 64
+    Width = 20
+    Enabled = True
+    ParentColor = False
+    TabOrder = 4
+    PLCTag = MB0_bit2
+    CaptionFalse = ''
+    CaptionTrue = ''
+    CaptionGrayed = ''
+    ValueTrue = 1
+  end
+  object HMICheckBox4: THMICheckBox
+    Left = 280
+    Height = 19
+    Top = 64
+    Width = 20
+    Enabled = True
+    ParentColor = False
+    TabOrder = 5
+    PLCTag = MB0_bit3
+    CaptionFalse = ''
+    CaptionTrue = ''
+    CaptionGrayed = ''
+    ValueTrue = 1
+  end
+  object HMICheckBox5: THMICheckBox
+    Left = 304
+    Height = 19
+    Top = 64
+    Width = 20
+    Enabled = True
+    ParentColor = False
+    TabOrder = 6
+    PLCTag = MB0_bit4
+    CaptionFalse = ''
+    CaptionTrue = ''
+    CaptionGrayed = ''
+    ValueTrue = 1
+  end
+  object HMILabel2: THMILabel
+    Left = 208
+    Height = 17
+    Top = 40
+    Width = 42
+    AutoSize = True
+    Enabled = True
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -13
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+    NumberFormat = '#0'
+    PLCTag = MB0
+    Prefix = 'MB0='
+    FormatDateTimeOptions = []
+  end
+  object Memo1: TMemo
+    AnchorSideLeft.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 0
+    Height = 69
+    Top = 392
+    Width = 829
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    ReadOnly = True
+    ScrollBars = ssAutoBoth
+    TabOrder = 7
+  end
+  object Chart1: TChart
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Memo1
+    Left = 0
+    Height = 304
+    Top = 88
+    Width = 829
+    AxisList = <    
+      item
+        Marks.LabelBrush.Style = bsClear
+        Minors = <>
+        Title.LabelFont.Orientation = 900
+        Title.LabelBrush.Style = bsClear
+      end    
+      item
+        Grid.Visible = False
+        Alignment = calBottom
+        Marks.LabelFont.Orientation = 900
+        Marks.Format = '%2:s'
+        Marks.LabelBrush.Style = bsClear
+        Marks.OverlapPolicy = opHideNeighbour
+        Marks.Source = ListChartSource1
+        Marks.Style = smsLabel
+        Minors = <>
+        Range.Max = 60
+        Range.UseMax = True
+        Range.UseMin = True
+        Title.Caption = 'Time Date'
+        Title.LabelBrush.Style = bsClear
+      end>
+    Extent.UseYMax = True
+    Extent.UseYMin = True
+    Extent.YMax = 100
+    Foot.Brush.Color = clBtnFace
+    Foot.Font.Color = clBlue
+    Foot.Frame.Visible = True
+    Foot.Shape = clsUserDefined
+    Title.Brush.Color = clBtnFace
+    Title.Font.Color = clBlue
+    Title.Text.Strings = (
+      'TAChart'
+    )
+    Anchors = [akLeft, akRight, akBottom]
+    PopupMenu = PopupMenu1
+    OnClick = Chart1Click
+    OnDragOver = Chart1DragOver
+    OnMouseDown = Chart1MouseDown
+    object Chart1LineSeries1: TLineSeries
+      Title = 'time_qqq'
+      AxisIndexX = 1
+      AxisIndexY = 0
+      LinePen.Color = clBlue
+      LinePen.Mode = pmMask
+      LinePen.Width = 2
+      Source = ListChartSource1
+    end
+    object Chart1LineSeries4: TLineSeries
+      AxisIndexX = 1
+      AxisIndexY = 0
+      LinePen.Color = clGreen
+      Source = ListChartSource5
+    end
+    object Chart1LineSeries5: TLineSeries
+      AxisIndexX = 1
+      AxisIndexY = 0
+      LinePen.Color = clRed
+      Source = ListChartSource6
+    end
+  end
+  object TCP_UDPPort1: TTCP_UDPPort
+    Host = '192.168.200.2'
+    ExclusiveDevice = False
+    EnableAutoReconnect = False
+    Left = 40
+    Top = 48
+  end
+  object ISOTCPDriver1: TISOTCPDriver
+    CommunicationPort = TCP_UDPPort1
+    ForcePDUSize = pdu240
+    ConnectionWay = ISOTCP
+    PLCSlot = 2
+    ReadOnly = False
+    Left = 40
+  end
+  object MB: TPLCBlock
+    TagGUID = '{F1763653-00D7-44B2-AD59-B0320D6E12E8}'
+    PLCRack = 0
+    PLCSlot = 0
+    PLCStation = 2
+    MemFile_DB = 0
+    MemAddress = 0
+    MemSubElement = 0
+    MemReadFunction = 3
+    MemWriteFunction = 0
+    ProtocolDriver = ISOTCPDriver1
+    UpdateTime = 15
+    LongAddress = ''
+    Size = 1
+    TagType = pttByte
+  end
+  object MB0: TPLCBlockElement
+    TagGUID = '{6D6136E2-6D52-466A-BFF7-683F85AF5C61}'
+    PLCBlock = MB
+    Index = 0
+    EnableMaxValue = False
+    EnableMinValue = False
+  end
+  object MB0_bit0: TTagBit
+    TagGUID = '{A065A782-9F48-41D4-B003-3FD7EA48A5B9}'
+    PLCTag = MB0
+    UseRawValue = False
+    StartBit = 0
+    EndBit = 0
+    EnableMaxValue = False
+    EnableMinValue = False
+  end
+  object MB0_bit1: TTagBit
+    TagGUID = '{526013E0-85D1-4C00-A361-786F03B9D07B}'
+    PLCTag = MB0
+    UseRawValue = False
+    StartBit = 1
+    EndBit = 1
+    EnableMaxValue = False
+    EnableMinValue = False
+  end
+  object MB0_bit2: TTagBit
+    TagGUID = '{ECD87AE9-3379-433E-A4F7-1D798011D6C1}'
+    PLCTag = MB0
+    UseRawValue = False
+    StartBit = 2
+    EndBit = 2
+    EnableMaxValue = False
+    EnableMinValue = False
+  end
+  object MB0_bit3: TTagBit
+    TagGUID = '{11D6C076-AB7D-4BF0-83EA-2DA3404CE90E}'
+    PLCTag = MB0
+    UseRawValue = False
+    StartBit = 3
+    EndBit = 3
+    EnableMaxValue = False
+    EnableMinValue = False
+  end
+  object MB0_bit4: TTagBit
+    TagGUID = '{AA862C38-6D27-47C6-BD58-AD390333B25F}'
+    PLCTag = MB0
+    UseRawValue = False
+    StartBit = 4
+    EndBit = 4
+    EnableMaxValue = False
+    EnableMinValue = False
+  end
+  object MB0_bit5: TTagBit
+    TagGUID = '{79B70327-FC6E-4910-80A9-EA0375AB9709}'
+    PLCTag = MB0
+    UseRawValue = False
+    StartBit = 5
+    EndBit = 5
+    EnableMaxValue = False
+    EnableMinValue = False
+  end
+  object MB0_bit6: TTagBit
+    TagGUID = '{CC685922-3583-43AF-8C27-AFD07FB90ABA}'
+    PLCTag = MB0
+    UseRawValue = False
+    StartBit = 6
+    EndBit = 6
+    EnableMaxValue = False
+    EnableMinValue = False
+  end
+  object MB0_bit7: TTagBit
+    TagGUID = '{64D4D8B6-0132-43C6-A01D-D78C83343BBC}'
+    PLCTag = MB0
+    UseRawValue = False
+    StartBit = 7
+    EndBit = 7
+    EnableMaxValue = False
+    EnableMinValue = False
+  end
+  object MB0_bit8: TTagBit
+    TagGUID = '{EE422D7D-86C7-49B2-AEDA-039C527FE9C9}'
+    PLCTag = MB0
+    UseRawValue = False
+    StartBit = 8
+    EndBit = 8
+    EnableMaxValue = False
+    EnableMinValue = False
+  end
+  object MB_: TPLCBlock
+    TagGUID = '{94B5D78C-5B85-4797-BD96-181DD845CD10}'
+    PLCRack = 0
+    PLCSlot = 0
+    PLCStation = 2
+    MemFile_DB = 0
+    MemAddress = 100
+    MemSubElement = 0
+    MemReadFunction = 3
+    MemWriteFunction = 0
+    ProtocolDriver = ISOTCPDriver1
+    UpdateTime = 100
+    LongAddress = ''
+    Size = 1
+    TagType = pttByte
+  end
+  object MB_100: TPLCBlockElement
+    TagGUID = '{5494EC11-BFB5-4A71-971A-CABD701009D5}'
+    PLCBlock = MB_
+    Index = 0
+    EnableMaxValue = False
+    EnableMinValue = False
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Top = 48
+  end
+  object ListChartSource1: TListChartSource
+    Left = 616
+    Top = 16
+  end
+  object ListChartSource5: TListChartSource
+    Left = 672
+    Top = 16
+  end
+  object ListChartSource6: TListChartSource
+    Left = 728
+    Top = 16
+  end
+  object ChartAxisTransformations1: TChartAxisTransformations
+    Left = 560
+    Top = 16
+    object ChartAxisTransformations1LinearAxisTransform1: TLinearAxisTransform
+      Offset = 2
+    end
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 398
+    Top = 14
+    object MenuItem1: TMenuItem
+      Caption = 'ZoomOut'
+      OnClick = MenuItem1Click
+    end
+    object MenuItem2: TMenuItem
+      Caption = 'Refresh'
+      OnClick = MenuItem2Click
+    end
+  end
+end
