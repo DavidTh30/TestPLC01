@@ -34,6 +34,8 @@ type
     Label10: TLabel;
     Label11: TLabel;
     Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -311,6 +313,7 @@ var
 
   MaxRecordTime:integer;
   Txt:String;
+  Ra:double;
 begin
   //if not TCP_UDPPort1.Active then exit;
   if (FormatDateTime('MM YYYY',Now)<>Directory_) then
@@ -400,13 +403,19 @@ MaxRecordTime:=60*60*12;
   end;
 
 
-Txt:=FormatDateTime('hh',  Now)+':'+FormatDateTime('nn',  Now)+':'+FormatDateTime('ss',  Now);
+  Txt:=FormatDateTime('hh',  Now)+':'+FormatDateTime('nn',  Now)+':'+FormatDateTime('ss',  Now);
 
-if ListChartSource1.Count < MaxRecordTime then ListChartSource1.Add(ListChartSource1.Count,Int(Random(1*100)),Txt,clBlue);    //Chart1 Silo Piovan
-    if ListChartSource5.Count < MaxRecordTime then ListChartSource5.Add(ListChartSource5.Count,Int(Random(1*100)),Txt,clOlive); //Chart1 Silo1
-    if ListChartSource6.Count < MaxRecordTime then ListChartSource6.Add(ListChartSource6.Count,Int(Random(1*100)),Txt,clRed);   //Chart1 Silo2
+  Ra:= Int(Random(1*1000));
+  if Chart1.Extent.YMax<Ra then Chart1.Extent.YMax:=Ra+1;
+  if ListChartSource1.Count < MaxRecordTime then ListChartSource1.Add(ListChartSource1.Count,Ra,Txt,clBlue);    //Chart1 Silo Piovan
+  Ra:= Int(Random(1*1000));
+  if Chart1.Extent.YMax<Ra then Chart1.Extent.YMax:=Ra+1;
+  If ListChartSource5.Count < MaxRecordTime then ListChartSource5.Add(ListChartSource5.Count,Ra,Txt,clOlive); //Chart1 Silo1
+  Ra:= Int(Random(1*1000));
+  if Chart1.Extent.YMax<Ra then Chart1.Extent.YMax:=Ra+1;
+  if ListChartSource6.Count < MaxRecordTime then ListChartSource6.Add(ListChartSource6.Count,Ra,Txt,clRed);   //Chart1 Silo2
 
-If (ListChartSource1.Count>240) and (Chart1.Tag = 0) then
+  If (ListChartSource1.Count>240) and (Chart1.Tag = 0) then
   begin
     Chart1.BottomAxis.Range.Max:=ListChartSource1.Count;
     //Chart1.BottomAxis.Range.UseMax:=True;
@@ -427,6 +436,8 @@ If (ListChartSource1.Count>240) and (Chart1.Tag = 0) then
     if(ListChartSource1.Count>60)then
     Chart1.Extent.XMax:=ListChartSource1.Count;
   end;
+  label13.Caption:= ListChartSource1.DataPoints.Text;
+  label14.Caption:= ListChartSource1.DataPoints[ListChartSource1.Count-1].QuotedString;
 end;
 
 procedure TForm1.Timer2Timer(Sender: TObject);
