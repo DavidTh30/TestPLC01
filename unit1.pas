@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
   Menus, TAGraph, TASources, TATransformations, tcp_udpport, ISOTCPDriver,
-  PLCBlock, PLCBlockElement, TagBit, HMILabel, HMICheckBox, TASeries, TAChartUtils;
+  PLCBlock, PLCBlockElement, TagBit, HMILabel, HMICheckBox, TASeries, TAChartUtils, Types;
 
 type
 
@@ -30,6 +30,18 @@ type
     HMILabel1: THMILabel;
     HMILabel2: THMILabel;
     ISOTCPDriver1: TISOTCPDriver;
+    Label1: TLabel;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
     ListChartSource1: TListChartSource;
     ListChartSource5: TListChartSource;
     ListChartSource6: TListChartSource;
@@ -52,6 +64,7 @@ type
     PopupMenu1: TPopupMenu;
     TCP_UDPPort1: TTCP_UDPPort;
     Timer1: TTimer;
+    Timer2: TTimer;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Chart1Click(Sender: TObject);
@@ -59,10 +72,15 @@ type
       State: TDragState; var Accept: Boolean);
     procedure Chart1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure Chart1MouseEnter(Sender: TObject);
+    procedure Chart1MouseLeave(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure MenuItem1Click(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
+    procedure Timer2Timer(Sender: TObject);
   private
 
   public
@@ -74,6 +92,8 @@ var
   Form1: TForm1;
   FileName_: string;
   Directory_:string;
+  Chart_Enter:boolean;
+  Chatr_Zoom:integer;
 
 implementation
 
@@ -191,6 +211,16 @@ begin
   Chart1.Tag :=1;
 end;
 
+procedure TForm1.Chart1MouseEnter(Sender: TObject);
+begin
+  Chart_Enter:=true;
+end;
+
+procedure TForm1.Chart1MouseLeave(Sender: TObject);
+begin
+  Chart_Enter:=false;
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
 
@@ -200,7 +230,50 @@ begin
   Memo1.Append('Directory ='+Directory_);
   Memo1.Append('FileName ='+FileName_);
 
+  Chart_Enter:=false;
   Chart1.Tag:=0;
+  Chatr_Zoom:=0;
+end;
+
+procedure TForm1.FormMouseWheel(Sender: TObject; Shift: TShiftState;
+  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+var
+  AC: TDoublePoint;
+  AZ: TDoubleRect;
+begin
+  if (Chart_Enter) and (Chart1.Tag=1) then
+  begin
+    if(WheelDelta>0)then
+    begin
+      if(Chatr_Zoom<=26)then
+      begin
+        AC:=Chart1.LogicalExtent.a;
+        AC.X:=AC.X+2;
+        AC.Y:=AC.Y+2;
+        AZ.a:=AC;
+        AC:=Chart1.LogicalExtent.b;
+        AC.X:=AC.X-2;
+        AC.Y:=AC.Y-2;
+        AZ.b:=AC;
+        Chart1.LogicalExtent:=AZ;
+        Chatr_Zoom:=Chatr_Zoom+2;
+      end;
+    end;
+    if(WheelDelta<0)then
+    begin
+      AC:=Chart1.LogicalExtent.a;
+      AC.X:=AC.X-2;
+      AC.Y:=AC.Y-2;
+      AZ.a:=AC;
+      AC:=Chart1.LogicalExtent.b;
+      AC.X:=AC.X+2;
+      AC.Y:=AC.Y+2;
+      AZ.b:=AC;
+      Chart1.LogicalExtent:=AZ;
+      Chatr_Zoom:=Chatr_Zoom-2;
+    end;
+  end;
+  label12.Caption:=IntToStr(WheelDelta);
 end;
 
 procedure TForm1.MenuItem1Click(Sender: TObject);
@@ -208,6 +281,7 @@ var
   AC: TDoublePoint;
   AZ: TDoubleRect;
 begin
+  Chart1.Tag:=1;
   AC:=Chart1.LogicalExtent.a;
   AC.X:=AC.X-1;
   AC.Y:=AC.Y-1;
@@ -217,11 +291,13 @@ begin
   AC.Y:=AC.Y+1;
   AZ.b:=AC;
   Chart1.LogicalExtent:=AZ;
+  Chatr_Zoom:=Chatr_Zoom-1;
 end;
 
 procedure TForm1.MenuItem2Click(Sender: TObject);
 begin
   Chart1.Tag:=0;
+  Chatr_Zoom:=0;
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
@@ -351,6 +427,28 @@ If (ListChartSource1.Count>240) and (Chart1.Tag = 0) then
     if(ListChartSource1.Count>60)then
     Chart1.Extent.XMax:=ListChartSource1.Count;
   end;
+end;
+
+procedure TForm1.Timer2Timer(Sender: TObject);
+begin
+  Label1.Caption:=IntToStr(Chart1.HorAxis.Margin)+','+FloatToStr(Chart1.HorAxis.Position);
+  Label2.Caption:=IntToStr(Chart1.LeftAxis.Margin)+','+FloatToStr(Chart1.LeftAxis.Position);
+  Label3.Caption:=IntToStr(Chart1.Legend.MarginX)+','+IntToStr(Chart1.Legend.MarginY)+','+IntToStr(Chart1.Legend.Spacing);
+  Label4.Caption:=IntToStr(Chart1.ExpandPercentage);
+  Label5.Caption:=FloatToStr(Chart1.Margins.Left)+','+FloatToStr(Chart1.Margins.Right)+','+FloatToStr(Chart1.Margins.Top)+','+FloatToStr(Chart1.Margins.Bottom);
+  Label6.Caption:=FloatToStr(Chart1.MarginsExternal.Left)+','+FloatToStr(Chart1.MarginsExternal.Right)+','+FloatToStr(Chart1.MarginsExternal.Top)+','+FloatToStr(Chart1.MarginsExternal.Bottom);
+  Label7.Caption:=FloatToStr(Chart1.BottomAxis.Range.Max)+','+FloatToStr(Chart1.BottomAxis.Position)+','+FloatToStr(Chart1.BottomAxis.Margin);
+  Label8.Caption:=FloatToStr(Chart1.BottomAxis.ZPosition);
+  Label9.Caption:=FloatToStr(Chart1.Extent.XMin)+','+FloatToStr(Chart1.Extent.XMax)+','+FloatToStr(Chart1.BottomAxis.Range.Min)+','+FloatToStr(Chart1.BottomAxis.Range.Max);
+  Label10.Caption:=FloatToStr(Chart1.LogicalExtent.a.X)+','+FloatToStr(Chart1.LogicalExtent.a.Y)+','+FloatToStr(Chart1.LogicalExtent.b.X)+','+FloatToStr(Chart1.LogicalExtent.b.Y);
+  Label11.Caption:=FloatToStr(Chart1.LogicalExtent.coords[1])+','+FloatToStr(Chart1.LogicalExtent.coords[2])+','+FloatToStr(Chart1.LogicalExtent.coords[3])+','+FloatToStr(Chart1.LogicalExtent.coords[4]);
+
+
+    //Chart1.BottomAxis.Range.Max:=ListChartSource1.Count;
+    //Chart1.BottomAxis.Range.Min:=0;
+    //Chart1.Extent.XMin:=0;
+    //Chart1.Extent.XMax:=ListChartSource1.Count;
+
 end;
 
 end.
