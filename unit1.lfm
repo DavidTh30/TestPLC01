@@ -1,13 +1,14 @@
 object Form1: TForm1
-  Left = -1459
-  Height = 461
-  Top = -464
+  Left = -1243
+  Height = 572
+  Top = -474
   Width = 829
   BorderStyle = bsSingle
   Caption = 'PLC:192.168.200.2  Port:102'
-  ClientHeight = 461
+  ClientHeight = 572
   ClientWidth = 829
   OnCreate = FormCreate
+  OnMouseWheel = FormMouseWheel
   Position = poWorkAreaCenter
   LCLVersion = '2.2.2.0'
   object Button1: TButton
@@ -138,13 +139,12 @@ object Form1: TForm1
     AnchorSideLeft.Control = Owner
     AnchorSideRight.Control = Owner
     AnchorSideRight.Side = asrBottom
-    AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 0
     Height = 69
     Top = 392
     Width = 829
-    Anchors = [akTop, akLeft, akRight, akBottom]
+    Anchors = [akTop, akLeft, akRight]
     ReadOnly = True
     ScrollBars = ssAutoBoth
     TabOrder = 7
@@ -199,6 +199,8 @@ object Form1: TForm1
     OnClick = Chart1Click
     OnDragOver = Chart1DragOver
     OnMouseDown = Chart1MouseDown
+    OnMouseEnter = Chart1MouseEnter
+    OnMouseLeave = Chart1MouseLeave
     object Chart1LineSeries1: TLineSeries
       Title = 'time_qqq'
       AxisIndexX = 1
@@ -220,6 +222,102 @@ object Form1: TForm1
       LinePen.Color = clRed
       Source = ListChartSource6
     end
+  end
+  object Label1: TLabel
+    Left = 80
+    Height = 15
+    Top = 469
+    Width = 34
+    Caption = 'Label1'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 80
+    Height = 15
+    Top = 488
+    Width = 34
+    Caption = 'Label2'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 80
+    Height = 15
+    Top = 509
+    Width = 34
+    Caption = 'Label3'
+    ParentColor = False
+  end
+  object Label4: TLabel
+    Left = 80
+    Height = 15
+    Top = 528
+    Width = 34
+    Caption = 'Label4'
+    ParentColor = False
+  end
+  object Label5: TLabel
+    Left = 80
+    Height = 15
+    Top = 549
+    Width = 34
+    Caption = 'Label5'
+    ParentColor = False
+  end
+  object Label6: TLabel
+    Left = 160
+    Height = 15
+    Top = 469
+    Width = 34
+    Caption = 'Label6'
+    ParentColor = False
+  end
+  object Label7: TLabel
+    Left = 160
+    Height = 15
+    Top = 490
+    Width = 34
+    Caption = 'Label7'
+    ParentColor = False
+  end
+  object Label8: TLabel
+    Left = 160
+    Height = 15
+    Top = 511
+    Width = 34
+    Caption = 'Label8'
+    ParentColor = False
+  end
+  object Label9: TLabel
+    Left = 242
+    Height = 15
+    Top = 469
+    Width = 34
+    Caption = 'Label9'
+    ParentColor = False
+  end
+  object Label10: TLabel
+    Left = 240
+    Height = 15
+    Top = 488
+    Width = 40
+    Caption = 'Label10'
+    ParentColor = False
+  end
+  object Label11: TLabel
+    Left = 240
+    Height = 15
+    Top = 509
+    Width = 40
+    Caption = 'Label11'
+    ParentColor = False
+  end
+  object Label12: TLabel
+    Left = 2
+    Height = 15
+    Top = 470
+    Width = 40
+    Caption = 'Label12'
+    ParentColor = False
   end
   object TCP_UDPPort1: TTCP_UDPPort
     Host = '192.168.200.2'
@@ -397,5 +495,11 @@ object Form1: TForm1
       Caption = 'Refresh'
       OnClick = MenuItem2Click
     end
+  end
+  object Timer2: TTimer
+    Interval = 100
+    OnTimer = Timer2Timer
+    Left = 300
+    Top = 7
   end
 end
